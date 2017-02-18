@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TFTCore
+namespace TFT.Core
 {
     public class TextFileIndex
     {

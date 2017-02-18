@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace TFTUnitTests
+namespace TFT.UnitTests
 {
     [TestFixture]
     public class Tests

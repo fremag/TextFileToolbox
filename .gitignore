@@ -1,0 +1,12 @@
+﻿################################################################################
+# Ce fichier .gitignore a été automatiquement créé par Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/TextFileToolbox/v14
+/packages
+/TFTCore/bin/Debug
+/TFTCore/obj/Debug
+/TFTTail/bin/Debug
+/TFTTail/obj/Debug
+/TFTUnitTests/bin/Debug
+/TFTUnitTests/obj/Debug
