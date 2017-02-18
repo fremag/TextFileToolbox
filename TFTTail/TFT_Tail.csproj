@@ -57,10 +57,6 @@
       <HintPath>..\packages\DockPanelSuite.2.13.0\lib\net40\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="WinFwk, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\fremag.WinFwk.1.0.4\lib\net461\WinFwk.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TFT_TailForm.cs">
@@ -81,6 +77,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="TFT_TailForm.resx">
+      <DependentUpon>TFT_TailForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -94,6 +93,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\WinFwk\WinFwk.csproj">
+      <Project>{B421F218-4883-4FF6-A186-719DD0A30A1E}</Project>
+      <Name>WinFwk</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
