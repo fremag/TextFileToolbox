@@ -16,7 +16,7 @@ namespace TFT.Tail
         [STAThread]
         static void Main()
         {
-            UISettingsMgr<UISettings>.Init(Application.ProductName);
+            UISettingsMgr<TailSettings>.Init(Application.ProductName);
             CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
             
             Application.EnableVisualStyles();

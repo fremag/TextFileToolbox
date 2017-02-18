@@ -1,4 +1,6 @@
 ﻿using System;
+using TFT.Tail.FileRepository;
+using WeifenLuo.WinFormsUI.Docking;
 using WinFwk.UIModules;
 using WinFwk.UIServices;
 
@@ -16,8 +18,10 @@ namespace TFT.Tail
             InitModuleFactory();
             UIServiceHelper.InitServices(msgBus);
             InitToolBars();
-            InitWorkplace();
             InitLog();
+
+            var workContent = InitWorkplace();
+            UIModuleFactory.CreateModule<FileRepositoryModule>(module => { }, module => DockModule(module, workContent, DockAlignment.Bottom));
         }
     }
 }

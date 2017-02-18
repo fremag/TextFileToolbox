@@ -59,10 +59,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileRepositoryFolderConfig.cs" />
     <Compile Include="FileRepository\FileRepositoryCommand.cs" />
+    <Compile Include="FileRepository\AbstractFileRepositoryInformation.cs" />
     <Compile Include="FileRepository\FileRepositoryModule.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="TailSettings.cs" />
     <Compile Include="TFT_TailForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -121,6 +124,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\folder_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder_small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder_error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\text_document.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
