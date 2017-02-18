@@ -59,6 +59,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileRepository\FileRepositoryCommand.cs" />
+    <Compile Include="FileRepository\FileRepositoryModule.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="TFT_TailForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,6 +103,12 @@
       <Project>{B421F218-4883-4FF6-A186-719DD0A30A1E}</Project>
       <Name>WinFwk</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\file_manager.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\file_manager_small.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

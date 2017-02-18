@@ -1,5 +1,6 @@
 ﻿using System;
 using WinFwk.UIModules;
+using WinFwk.UIServices;
 
 namespace TFT.Tail
 {
@@ -12,6 +13,8 @@ namespace TFT.Tail
 
         private void TFT_TailForm_Load(object sender, EventArgs e)
         {
+            InitModuleFactory();
+            UIServiceHelper.InitServices(msgBus);
             InitToolBars();
             InitWorkplace();
             InitLog();
