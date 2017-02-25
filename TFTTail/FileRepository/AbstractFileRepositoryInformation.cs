@@ -36,33 +36,56 @@ namespace TFT.Tail.FileRepository
 
     public class FolderRepositoryInformation : AbstractFileRepositoryInformation
     {
-        FileRepositoryFolderConfig Config { get; }
+        public FileRepositoryFolderConfig Config { get; private set; }
         DirectoryInfo dirInfo;
         FileInfo[] fileInfos;
         DirectoryInfo[] subDirInfos;
 
         public FolderRepositoryInformation(FileRepositoryFolderConfig config)
         {
-            Config = config;
-            Name = Config.Name;
             Icon = Properties.Resources.folder_small;
-            dirInfo = new DirectoryInfo(Config.Path);
-            if (!dirInfo.Exists)
+            Init(config);
+        }
+
+        public void Init(FileRepositoryFolderConfig config)
+        {
+            Config = config;
+            Name = config.Name;
+            if (!string.IsNullOrEmpty(Config.Path))
             {
-                Icon = Properties.Resources.folder_error;
-                Tooltip = $"Can't find path: {dirInfo.Exists}";
-                dirInfo = null;
-            }
-            else if (string.IsNullOrEmpty(Config.Pattern))
-            {
-                Icon = Properties.Resources.folder_error;
-                Tooltip = "Pattern is null or empty !";
-                dirInfo = null;
+                dirInfo = new DirectoryInfo(Config.Path);
+                if (!dirInfo.Exists)
+                {
+                    Icon = Properties.Resources.folder_error;
+                    Tooltip = $"Can't find path: {dirInfo.Exists}";
+                    dirInfo = null;
+                }
+                else if (string.IsNullOrEmpty(Config.Pattern))
+                {
+                    Icon = Properties.Resources.folder_error;
+                    Tooltip = "Pattern is null or empty !";
+                    dirInfo = null;
+                }
+                else
+                {
+                    try
+                    {
+                        fileInfos = dirInfo.GetFiles(Config.Pattern);
+                        subDirInfos = dirInfo.GetDirectories();
+                    }
+                    catch(Exception e) 
+                    {
+                        Icon = Properties.Resources.folder_error;
+                        Tooltip = $"Can't find files: {e.Message}";
+                        dirInfo = null;
+                    }
+                }
             }
             else
             {
-                fileInfos = dirInfo.GetFiles(Config.Pattern);
-                subDirInfos = dirInfo.GetDirectories();
+                Icon = Properties.Resources.folder_error;
+                Tooltip = $"Path is empty or null !";
+                dirInfo = null;
             }
         }
 
@@ -83,6 +106,7 @@ namespace TFT.Tail.FileRepository
         }
 
         public override bool CanExpand => (fileInfos != null && fileInfos.Any()) || (subDirInfos != null  && subDirInfos.Any());
+
         public override List<AbstractFileRepositoryInformation> Children
         {
             get

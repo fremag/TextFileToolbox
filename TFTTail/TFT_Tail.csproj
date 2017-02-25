@@ -59,7 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileRepositoryFolderConfig.cs" />
+    <Compile Include="FileRepository\FileRepositoryFolderConfig.cs" />
     <Compile Include="FileRepository\FileRepositoryCommand.cs" />
     <Compile Include="FileRepository\AbstractFileRepositoryInformation.cs" />
     <Compile Include="FileRepository\FileRepositoryModule.cs">
@@ -105,12 +105,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\WinFwk\WinFwk.csproj">
-      <Project>{B421F218-4883-4FF6-A186-719DD0A30A1E}</Project>
-      <Name>WinFwk</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\file_manager.png" />
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +127,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\text_document.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\WinFwk\WinFwk.csproj">
+      <Project>{b421f218-4883-4ff6-a186-719dd0a30a1e}</Project>
+      <Name>WinFwk</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

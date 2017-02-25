@@ -1,11 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using WinFwk.UIMessages;
 using WinFwk.UIModules;
+using WinFwk.UITools.Configuration;
+using WinFwk.UITools.Log;
 using WinFwk.UITools.Settings;
 
 namespace TFT.Tail.FileRepository
 {
     public class FileRepositoryModule : UIModule
+        , IConfigurableModule
+        , IMessageListener<UISettingsChangedMessage> 
     {
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
         private System.Windows.Forms.ToolStrip toolStrip1;
@@ -17,18 +22,36 @@ namespace TFT.Tail.FileRepository
 
         List<FolderRepositoryInformation> nodes = new List<FolderRepositoryInformation>();
 
+        public IModuleConfig ModuleConfig
+        {
+            get
+            {
+                var selected = dtlvFileRepository.SelectedObject as FolderRepositoryInformation;
+
+                if(selected == null || ! nodes.Contains(selected))
+                {
+                    return null;
+                }
+
+                return selected.Config;
+            }
+        }
+
         public FileRepositoryModule()
         {
             InitializeComponent();
             dtlvFileRepository.InitData<AbstractFileRepositoryInformation>();
             dtlvFileRepository.CheckBoxes = true;
-            this.Name = "File Repository";
-            this.Text = "File Repository";
-            this.Summary = "File Repository";
-            this.Icon = Properties.Resources.file_manager_small;
+            Name = "File Repository";
+            Text = "File Repository";
+            Summary = "File Repository";
+            Icon = Properties.Resources.file_manager_small;
+            tsbFolderEdit.Image = RunConfigEditorCommand.SmallIcon;
         }
+
         public override void Init()
         {
+            nodes.Clear();
             var folderConfigs = TailSettings.Instance.FileRepositoryFolderConfigs;
             if(folderConfigs == null || !folderConfigs.Any())
             {
@@ -36,6 +59,7 @@ namespace TFT.Tail.FileRepository
             }
             foreach (var folderConfig in folderConfigs)
             {
+                folderConfig.OwnerModule = this;
                 FolderRepositoryInformation info = new FolderRepositoryInformation(folderConfig);
                 nodes.Add(info);
             }
@@ -44,24 +68,24 @@ namespace TFT.Tail.FileRepository
         public override void PostInit()
         {
             base.PostInit();
-
             dtlvFileRepository.Roots = nodes;
+            dtlvFileRepository.RebuildAll(true);
         }
         #region Designer
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
+            this.dtlvFileRepository = new WinFwk.UITools.DefaultTreeListView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsbFolderAdd = new System.Windows.Forms.ToolStripButton();
             this.tsbFolderDelete = new System.Windows.Forms.ToolStripButton();
             this.tsbFolderEdit = new System.Windows.Forms.ToolStripButton();
-            this.dtlvFileRepository = new WinFwk.UITools.DefaultTreeListView();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtlvFileRepository)).BeginInit();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripContainer1
@@ -82,45 +106,6 @@ namespace TFT.Tail.FileRepository
             // 
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
             // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbFolderAdd,
-            this.tsbFolderDelete,
-            this.tsbFolderEdit});
-            this.toolStrip1.Location = new System.Drawing.Point(3, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(81, 25);
-            this.toolStrip1.TabIndex = 0;
-            // 
-            // tsbFolderAdd
-            // 
-            this.tsbFolderAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbFolderAdd.Image = global::TFT.Tail.Properties.Resources.folder_add_small;
-            this.tsbFolderAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbFolderAdd.Name = "tsbFolderAdd";
-            this.tsbFolderAdd.Size = new System.Drawing.Size(23, 22);
-            this.tsbFolderAdd.Text = "Add Folder";
-            // 
-            // tsbFolderDelete
-            // 
-            this.tsbFolderDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbFolderDelete.Image = global::TFT.Tail.Properties.Resources.folder_delete_small;
-            this.tsbFolderDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbFolderDelete.Name = "tsbFolderDelete";
-            this.tsbFolderDelete.Size = new System.Drawing.Size(23, 22);
-            this.tsbFolderDelete.Text = "Delete Folder";
-            // 
-            // tsbFolderEdit
-            // 
-            this.tsbFolderEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbFolderEdit.Image = global::TFT.Tail.Properties.Resources.folder_edit_small;
-            this.tsbFolderEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbFolderEdit.Name = "tsbFolderEdit";
-            this.tsbFolderEdit.Size = new System.Drawing.Size(23, 22);
-            this.tsbFolderEdit.Text = "Edit Folder";
-            // 
             // dtlvFileRepository
             // 
             this.dtlvFileRepository.CellEditUseWholeCell = false;
@@ -139,6 +124,48 @@ namespace TFT.Tail.FileRepository
             this.dtlvFileRepository.View = System.Windows.Forms.View.Details;
             this.dtlvFileRepository.VirtualMode = true;
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsbFolderAdd,
+            this.tsbFolderDelete,
+            this.tsbFolderEdit});
+            this.toolStrip1.Location = new System.Drawing.Point(3, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(112, 25);
+            this.toolStrip1.TabIndex = 0;
+            // 
+            // tsbFolderAdd
+            // 
+            this.tsbFolderAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbFolderAdd.Image = global::TFT.Tail.Properties.Resources.folder_add_small;
+            this.tsbFolderAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbFolderAdd.Name = "tsbFolderAdd";
+            this.tsbFolderAdd.Size = new System.Drawing.Size(23, 22);
+            this.tsbFolderAdd.Text = "Add Folder";
+            this.tsbFolderAdd.Click += new System.EventHandler(this.tsbFolderAdd_Click);
+            // 
+            // tsbFolderDelete
+            // 
+            this.tsbFolderDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbFolderDelete.Image = global::TFT.Tail.Properties.Resources.folder_delete_small;
+            this.tsbFolderDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbFolderDelete.Name = "tsbFolderDelete";
+            this.tsbFolderDelete.Size = new System.Drawing.Size(23, 22);
+            this.tsbFolderDelete.Text = "Delete Checked Folder";
+            this.tsbFolderDelete.Click += new System.EventHandler(this.tsbFolderDelete_Click);
+            // 
+            // tsbFolderEdit
+            // 
+            this.tsbFolderEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbFolderEdit.Image = global::TFT.Tail.Properties.Resources.folder_edit_small;
+            this.tsbFolderEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbFolderEdit.Name = "tsbFolderEdit";
+            this.tsbFolderEdit.Size = new System.Drawing.Size(23, 22);
+            this.tsbFolderEdit.Text = "Edit Folder";
+            this.tsbFolderEdit.Click += new System.EventHandler(this.tsbFolderEdit_Click);
+            // 
             // FileRepositoryModule
             // 
             this.Controls.Add(this.toolStripContainer1);
@@ -149,12 +176,73 @@ namespace TFT.Tail.FileRepository
             this.toolStripContainer1.TopToolStripPanel.PerformLayout();
             this.toolStripContainer1.ResumeLayout(false);
             this.toolStripContainer1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dtlvFileRepository)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dtlvFileRepository)).EndInit();
             this.ResumeLayout(false);
 
         }
         #endregion
+
+        private void tsbFolderAdd_Click(object sender, System.EventArgs e)
+        {
+            var folderConfigs = TailSettings.Instance.FileRepositoryFolderConfigs;
+            FileRepositoryFolderConfig folderConfig = TailSettings.Instance.CreateFileRepositoryFolderConfig();
+            folderConfig.OwnerModule = this;
+            folderConfigs.Add(folderConfig);
+            FolderRepositoryInformation info = new FolderRepositoryInformation(folderConfig);
+            UISettingsMgr<TailSettings>.Save(TailSettings.Instance);
+            Init();
+            PostInit();
+            RunConfigEditorCommand.RunConfigEditor(this, MessageBus, folderConfig);
+        }
+
+        private void tsbFolderDelete_Click(object sender, System.EventArgs e)
+        {
+            var folders = dtlvFileRepository.CheckedObjects.OfType<FolderRepositoryInformation>();
+            if(folders == null || ! folders.Any())
+            {
+                Log("Can't remove folders: nothing is checked !", LogLevelType.Error);
+            }
+            var folderConfigs = TailSettings.Instance.FileRepositoryFolderConfigs;
+            foreach (var folder in folders)
+            {
+                var folderConfig = folder.Config;
+                folderConfigs.Remove(folderConfig);
+            }
+            UISettingsMgr<TailSettings>.Save(TailSettings.Instance);
+            Init();
+            PostInit();
+        }
+
+        private void tsbFolderEdit_Click(object sender, System.EventArgs e)
+        {
+            RunConfigEditorCommand.RunConfigEditor(this, MessageBus);
+        }
+
+        public void HandleMessage(UISettingsChangedMessage message)
+        {
+            Init();
+            PostInit();
+        }
+
+        public void Apply(IModuleConfig config)
+        {
+            FileRepositoryFolderConfig folderConfig = config as FileRepositoryFolderConfig;
+            if( folderConfig == null)
+            {
+                return;
+            }
+            TailSettings.Instance.UpdateFileRepositoryFolderConfig(folderConfig);
+            UISettingsMgr<TailSettings>.Save(TailSettings.Instance);
+            Init();
+            PostInit();
+        }
+
+        public IModuleConfigEditor CreateEditor()
+        {
+            return new DefaultModuleConfigEditor();
+        }
+
     }
 }
