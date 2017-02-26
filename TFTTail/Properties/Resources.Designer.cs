@@ -63,6 +63,16 @@ namespace TFT.Tail.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap arrow_refresh {
+            get {
+                object obj = ResourceManager.GetObject("arrow_refresh", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap file_manager {
             get {
                 object obj = ResourceManager.GetObject("file_manager", resourceCulture);
@@ -116,6 +126,16 @@ namespace TFT.Tail.Properties {
         internal static System.Drawing.Bitmap folder_error {
             get {
                 object obj = ResourceManager.GetObject("folder_error", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folder_explorer {
+            get {
+                object obj = ResourceManager.GetObject("folder_explorer", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

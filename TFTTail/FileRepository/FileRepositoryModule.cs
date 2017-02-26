@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using WinFwk.UIMessages;
 using WinFwk.UIModules;
@@ -19,7 +22,8 @@ namespace TFT.Tail.FileRepository
         private WinFwk.UITools.DefaultTreeListView dtlvFileRepository;
         private System.ComponentModel.IContainer components;
         private System.Windows.Forms.ToolStripButton tsbFolderDelete;
-
+        private System.Windows.Forms.ToolStripButton tsbOpenInExplorer;
+        private System.Windows.Forms.ToolStripButton tsbRefresh;
         List<FolderRepositoryInformation> nodes = new List<FolderRepositoryInformation>();
 
         public IModuleConfig ModuleConfig
@@ -81,6 +85,8 @@ namespace TFT.Tail.FileRepository
             this.tsbFolderAdd = new System.Windows.Forms.ToolStripButton();
             this.tsbFolderDelete = new System.Windows.Forms.ToolStripButton();
             this.tsbFolderEdit = new System.Windows.Forms.ToolStripButton();
+            this.tsbOpenInExplorer = new System.Windows.Forms.ToolStripButton();
+            this.tsbRefresh = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -130,10 +136,12 @@ namespace TFT.Tail.FileRepository
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbFolderAdd,
             this.tsbFolderDelete,
-            this.tsbFolderEdit});
+            this.tsbFolderEdit,
+            this.tsbOpenInExplorer,
+            this.tsbRefresh});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(112, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(158, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // tsbFolderAdd
@@ -166,6 +174,28 @@ namespace TFT.Tail.FileRepository
             this.tsbFolderEdit.Text = "Edit Folder";
             this.tsbFolderEdit.Click += new System.EventHandler(this.tsbFolderEdit_Click);
             // 
+            // tsbOpenInExplorer
+            // 
+            this.tsbOpenInExplorer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbOpenInExplorer.Image = global::TFT.Tail.Properties.Resources.folder_explorer;
+            this.tsbOpenInExplorer.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbOpenInExplorer.Name = "tsbOpenInExplorer";
+            this.tsbOpenInExplorer.Size = new System.Drawing.Size(23, 22);
+            this.tsbOpenInExplorer.Text = "toolStripButton1";
+            this.tsbOpenInExplorer.ToolTipText = "Open Folder in Explorer";
+            this.tsbOpenInExplorer.Click += new System.EventHandler(this.tsbOpenInExplorer_Click);
+            // 
+            // tsbRefresh
+            // 
+            this.tsbRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbRefresh.Image = global::TFT.Tail.Properties.Resources.arrow_refresh;
+            this.tsbRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbRefresh.Name = "tsbRefresh";
+            this.tsbRefresh.Size = new System.Drawing.Size(23, 22);
+            this.tsbRefresh.Text = "toolStripButton2";
+            this.tsbRefresh.ToolTipText = "Refresh Repository";
+            this.tsbRefresh.Click += new System.EventHandler(this.tsbRefresh_Click);
+            // 
             // FileRepositoryModule
             // 
             this.Controls.Add(this.toolStripContainer1);
@@ -194,7 +224,7 @@ namespace TFT.Tail.FileRepository
             UISettingsMgr<TailSettings>.Save(TailSettings.Instance);
             Init();
             PostInit();
-            RunConfigEditorCommand.RunConfigEditor(this, MessageBus, folderConfig);
+            MessageBus.SendMessage(new OpenModuleConfigurationEditorRequest(this, folderConfig));
         }
 
         private void tsbFolderDelete_Click(object sender, System.EventArgs e)
@@ -217,7 +247,10 @@ namespace TFT.Tail.FileRepository
 
         private void tsbFolderEdit_Click(object sender, System.EventArgs e)
         {
-            RunConfigEditorCommand.RunConfigEditor(this, MessageBus);
+            if (ModuleConfig != null)
+            {
+                MessageBus.SendMessage(new OpenModuleConfigurationEditorRequest(this, ModuleConfig));
+            }
         }
 
         public void HandleMessage(UISettingsChangedMessage message)
@@ -244,5 +277,40 @@ namespace TFT.Tail.FileRepository
             return new DefaultModuleConfigEditor();
         }
 
+        private void tsbOpenInExplorer_Click(object sender, System.EventArgs e)
+        {
+            var selected = dtlvFileRepository.SelectedObject as FolderRepositoryInformation;
+            if(selected == null)
+            {
+                Log("No folder is selected !", LogLevelType.Error);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(selected.Path))
+            {
+                Log("No folder is selected !", LogLevelType.Error);
+                return;
+            }
+
+            if ( ! Directory.Exists(selected.Path))
+            {
+                Log($"Folder '{0:selected.Path}' doesn't exists !", LogLevelType.Error);
+                return;
+            }
+            try
+            {
+                Process.Start(selected.Path);
+            }
+            catch (Exception ex)
+            {
+                Log($"Can't open selected path: {0:selected.Path}", ex);
+            }
+        }
+
+        private void tsbRefresh_Click(object sender, System.EventArgs e)
+        {
+            Init();
+            PostInit();
+        }
     }
 }
