@@ -59,6 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileRepository\CreateRepositoryFolderRequest.cs" />
     <Compile Include="FileRepository\FileRepositoryFolderConfig.cs" />
     <Compile Include="FileRepository\FileRepositoryCommand.cs" />
     <Compile Include="FileRepository\AbstractFileRepositoryInformation.cs" />

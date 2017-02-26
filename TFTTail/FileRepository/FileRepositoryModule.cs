@@ -13,7 +13,8 @@ namespace TFT.Tail.FileRepository
 {
     public class FileRepositoryModule : UIModule
         , IConfigurableModule
-        , IMessageListener<UISettingsChangedMessage> 
+        , IMessageListener<UISettingsChangedMessage>
+        , IMessageListener<CreateRepositoryFolderRequest>
     {
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
         private System.Windows.Forms.ToolStrip toolStrip1;
@@ -216,9 +217,14 @@ namespace TFT.Tail.FileRepository
 
         private void tsbFolderAdd_Click(object sender, System.EventArgs e)
         {
-            var folderConfigs = TailSettings.Instance.FileRepositoryFolderConfigs;
             FileRepositoryFolderConfig folderConfig = TailSettings.Instance.CreateFileRepositoryFolderConfig();
+            AddFolder(folderConfig);
+        }
+
+        private void AddFolder(FileRepositoryFolderConfig folderConfig)
+        {
             folderConfig.OwnerModule = this;
+            var folderConfigs = TailSettings.Instance.FileRepositoryFolderConfigs;
             folderConfigs.Add(folderConfig);
             FolderRepositoryInformation info = new FolderRepositoryInformation(folderConfig);
             UISettingsMgr<TailSettings>.Save(TailSettings.Instance);
@@ -311,6 +317,16 @@ namespace TFT.Tail.FileRepository
         {
             Init();
             PostInit();
+        }
+
+        public void HandleMessage(CreateRepositoryFolderRequest message)
+        {
+            FileRepositoryFolderConfig folderConfig = TailSettings.Instance.CreateFileRepositoryFolderConfig();
+            folderConfig.Name = message.Path;
+            folderConfig.Path = message.Path;
+            folderConfig.Pattern= message.Pattern;
+
+            AddFolder(folderConfig);
         }
     }
 }
