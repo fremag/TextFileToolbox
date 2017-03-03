@@ -121,6 +121,12 @@
   <data name="arrow_refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\arrow_refresh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="document_inspect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\document_inspect.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="document_inspect_small" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\document_inspect_small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="file_manager" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\file_manager.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -142,8 +148,17 @@
   <data name="folder_explorer" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\folder_explorer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="folder_go" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\folder_go.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="folder_small" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\folder_small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="table_layout_subtotals" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\table_layout_subtotals.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="table_layout_subtotals_small" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\table_layout_subtotals_small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="text_document" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\text_document.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

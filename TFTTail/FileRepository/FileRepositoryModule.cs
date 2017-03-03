@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using TFT.Tail.FileViewer;
+using WinFwk.UICommands;
 using WinFwk.UIMessages;
 using WinFwk.UIModules;
 using WinFwk.UITools.Configuration;
@@ -15,6 +17,7 @@ namespace TFT.Tail.FileRepository
         , IConfigurableModule
         , IMessageListener<UISettingsChangedMessage>
         , IMessageListener<CreateRepositoryFolderRequest>
+        , UIDataProvider<DisplayFilesRequest>
     {
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
         private System.Windows.Forms.ToolStrip toolStrip1;
@@ -25,6 +28,9 @@ namespace TFT.Tail.FileRepository
         private System.Windows.Forms.ToolStripButton tsbFolderDelete;
         private System.Windows.Forms.ToolStripButton tsbOpenInExplorer;
         private System.Windows.Forms.ToolStripButton tsbRefresh;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton tsbDisplayFiles;
         List<FolderRepositoryInformation> nodes = new List<FolderRepositoryInformation>();
 
         public IModuleConfig ModuleConfig
@@ -88,6 +94,9 @@ namespace TFT.Tail.FileRepository
             this.tsbFolderEdit = new System.Windows.Forms.ToolStripButton();
             this.tsbOpenInExplorer = new System.Windows.Forms.ToolStripButton();
             this.tsbRefresh = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbDisplayFiles = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -138,11 +147,14 @@ namespace TFT.Tail.FileRepository
             this.tsbFolderAdd,
             this.tsbFolderDelete,
             this.tsbFolderEdit,
+            this.toolStripSeparator2,
             this.tsbOpenInExplorer,
-            this.tsbRefresh});
+            this.tsbRefresh,
+            this.toolStripSeparator1,
+            this.tsbDisplayFiles});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(158, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(193, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // tsbFolderAdd
@@ -196,6 +208,27 @@ namespace TFT.Tail.FileRepository
             this.tsbRefresh.Text = "toolStripButton2";
             this.tsbRefresh.ToolTipText = "Refresh Repository";
             this.tsbRefresh.Click += new System.EventHandler(this.tsbRefresh_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tsbDisplayFiles
+            // 
+            this.tsbDisplayFiles.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbDisplayFiles.Image = global::TFT.Tail.Properties.Resources.document_inspect_small;
+            this.tsbDisplayFiles.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbDisplayFiles.Name = "tsbDisplayFiles";
+            this.tsbDisplayFiles.Size = new System.Drawing.Size(23, 22);
+            this.tsbDisplayFiles.Text = "toolStripButton1";
+            this.tsbDisplayFiles.ToolTipText = "Display checked files...";
+            this.tsbDisplayFiles.Click += new System.EventHandler(this.tsbDisplayFiles_Click);
             // 
             // FileRepositoryModule
             // 
@@ -327,6 +360,23 @@ namespace TFT.Tail.FileRepository
             folderConfig.Pattern= message.Pattern;
 
             AddFolder(folderConfig);
+        }
+
+
+        public DisplayFilesRequest Data
+        {
+            get
+            {
+                var paths = dtlvFileRepository.CheckedObjects.OfType<FileRepositoryInformation>().Select(info => info.Path);
+                DisplayFilesRequest displayFilesRequest = new DisplayFilesRequest(paths);
+                return displayFilesRequest;
+            }
+        }
+
+        private void tsbDisplayFiles_Click(object sender, EventArgs e)
+        {
+            DisplayFilesRequest displayFilesRequest = Data;
+            MessageBus.SendMessage(displayFilesRequest);
         }
     }
 }

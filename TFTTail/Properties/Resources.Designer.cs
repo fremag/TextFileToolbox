@@ -73,6 +73,26 @@ namespace TFT.Tail.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap document_inspect {
+            get {
+                object obj = ResourceManager.GetObject("document_inspect", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap document_inspect_small {
+            get {
+                object obj = ResourceManager.GetObject("document_inspect_small", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap file_manager {
             get {
                 object obj = ResourceManager.GetObject("file_manager", resourceCulture);
@@ -143,9 +163,39 @@ namespace TFT.Tail.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap folder_go {
+            get {
+                object obj = ResourceManager.GetObject("folder_go", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap folder_small {
             get {
                 object obj = ResourceManager.GetObject("folder_small", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap table_layout_subtotals {
+            get {
+                object obj = ResourceManager.GetObject("table_layout_subtotals", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap table_layout_subtotals_small {
+            get {
+                object obj = ResourceManager.GetObject("table_layout_subtotals_small", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

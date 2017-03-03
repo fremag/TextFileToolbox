@@ -68,6 +68,16 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="FileRepository\FolderRepositoryInformation.cs" />
+    <Compile Include="FileViewer\FileViewerModule.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FileViewer\FileViewerModule.Designer.cs">
+      <DependentUpon>FileViewerModule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileViewer\DisplayFileCommand.cs" />
+    <Compile Include="FileViewer\OpenFileCommand.cs" />
+    <Compile Include="FileViewer\DisplayFilesRequest.cs" />
+    <Compile Include="FileViewer\DisplayFileService.cs" />
     <Compile Include="TailSettings.cs" />
     <Compile Include="TFT_TailForm.cs">
       <SubType>Form</SubType>
@@ -142,6 +152,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\arrow_refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\table_layout_subtotals_small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\document_inspect_small.png" />
+    <Content Include="Resources\document_inspect.png" />
+    <Content Include="Resources\folder_go.png" />
+    <Content Include="Resources\table_layout_subtotals.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
