@@ -28,10 +28,41 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.components = new System.ComponentModel.Container();
+            this.dlvFileViewer = new WinFwk.UITools.DefaultListView();
+            ((System.ComponentModel.ISupportInitialize)(this.dlvFileViewer)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // dlvFileViewer
+            // 
+            this.dlvFileViewer.CellEditUseWholeCell = false;
+            this.dlvFileViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dlvFileViewer.FullRowSelect = true;
+            this.dlvFileViewer.HideSelection = false;
+            this.dlvFileViewer.Location = new System.Drawing.Point(0, 0);
+            this.dlvFileViewer.Name = "dlvFileViewer";
+            this.dlvFileViewer.ShowGroups = false;
+            this.dlvFileViewer.ShowImagesOnSubItems = true;
+            this.dlvFileViewer.Size = new System.Drawing.Size(281, 352);
+            this.dlvFileViewer.TabIndex = 0;
+            this.dlvFileViewer.UseCompatibleStateImageBehavior = false;
+            this.dlvFileViewer.View = System.Windows.Forms.View.Details;
+            this.dlvFileViewer.VirtualMode = true;
+            // 
+            // FileViewerModule
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.dlvFileViewer);
+            this.Name = "FileViewerModule";
+            this.Size = new System.Drawing.Size(281, 352);
+            ((System.ComponentModel.ISupportInitialize)(this.dlvFileViewer)).EndInit();
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private WinFwk.UITools.DefaultListView dlvFileViewer;
     }
 }

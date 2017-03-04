@@ -59,6 +59,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\FileIndexer.cs" />
+    <Compile Include="Core\FragmentedList.cs" />
     <Compile Include="FileRepository\CreateRepositoryFolderRequest.cs" />
     <Compile Include="FileRepository\FileRepositoryFolderConfig.cs" />
     <Compile Include="FileRepository\FileRepositoryCommand.cs" />
@@ -89,6 +91,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FileRepository\FileRepositoryModule.resx">
       <DependentUpon>FileRepositoryModule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileViewer\FileViewerModule.resx">
+      <DependentUpon>FileViewerModule.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

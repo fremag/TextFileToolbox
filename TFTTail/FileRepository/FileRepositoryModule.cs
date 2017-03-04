@@ -89,13 +89,13 @@ namespace TFT.Tail.FileRepository
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.dtlvFileRepository = new WinFwk.UITools.DefaultTreeListView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbFolderAdd = new System.Windows.Forms.ToolStripButton();
             this.tsbFolderDelete = new System.Windows.Forms.ToolStripButton();
             this.tsbFolderEdit = new System.Windows.Forms.ToolStripButton();
             this.tsbOpenInExplorer = new System.Windows.Forms.ToolStripButton();
             this.tsbRefresh = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbDisplayFiles = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -139,6 +139,7 @@ namespace TFT.Tail.FileRepository
             this.dtlvFileRepository.UseCompatibleStateImageBehavior = false;
             this.dtlvFileRepository.View = System.Windows.Forms.View.Details;
             this.dtlvFileRepository.VirtualMode = true;
+            this.dtlvFileRepository.CellClick += new System.EventHandler<BrightIdeasSoftware.CellClickEventArgs>(this.dtlvFileRepository_CellClick);
             // 
             // toolStrip1
             // 
@@ -154,8 +155,18 @@ namespace TFT.Tail.FileRepository
             this.tsbDisplayFiles});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(193, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(162, 25);
             this.toolStrip1.TabIndex = 0;
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // tsbFolderAdd
             // 
@@ -208,16 +219,6 @@ namespace TFT.Tail.FileRepository
             this.tsbRefresh.Text = "toolStripButton2";
             this.tsbRefresh.ToolTipText = "Refresh Repository";
             this.tsbRefresh.Click += new System.EventHandler(this.tsbRefresh_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // tsbDisplayFiles
             // 
@@ -376,6 +377,24 @@ namespace TFT.Tail.FileRepository
         private void tsbDisplayFiles_Click(object sender, EventArgs e)
         {
             DisplayFilesRequest displayFilesRequest = Data;
+            MessageBus.SendMessage(displayFilesRequest);
+        }
+
+        private void dtlvFileRepository_CellClick(object sender, BrightIdeasSoftware.CellClickEventArgs e)
+        {
+            if( e.ClickCount != 2)
+            {
+                return;
+            }
+
+            var lineItem = dtlvFileRepository.SelectedItem?.RowObject;
+            FileRepositoryInformation info = lineItem as FileRepositoryInformation;
+            if( info == null)
+            {
+                return;
+            }
+
+            DisplayFilesRequest displayFilesRequest = new DisplayFilesRequest(new[] { info.Path });
             MessageBus.SendMessage(displayFilesRequest);
         }
     }
