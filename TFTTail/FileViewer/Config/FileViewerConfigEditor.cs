@@ -30,7 +30,8 @@ namespace TFT.Tail.FileViewer.Config
         {
             get
             {
-                return null;
+                var config = dtlvConfigs.CheckedObject as FileViewerConfigInformation;
+                return config.FileViewerConfig;
             }
         }
 
@@ -48,12 +49,6 @@ namespace TFT.Tail.FileViewer.Config
             dtlvConfigs.Roots = configs.Select(config => new FileViewerConfigInformation(config));
         }
         
-
-        private void dtlvConfigs_SubItemChecking(object sender, SubItemCheckingEventArgs e)
-        {
-
-        }
-
         private void dtlvConfigs_SelectionChanged(object sender, EventArgs e)
         {
             var selected = dtlvConfigs.SelectedObject as AbstractFileViewerConfigInformation;
@@ -63,34 +58,5 @@ namespace TFT.Tail.FileViewer.Config
             }
             propertyGrid1.SelectedObject = selected.Data;
         }
-    }
-
-    public abstract class AbstractFileViewerConfigInformation : TreeNodeInformationAdapter<AbstractFileViewerConfigInformation>
-    {
-        [OLVColumn(Width = 250, ImageAspectName = nameof(Icon))]
-        public virtual string Name { get; }
-        [OLVColumn(Width = 500)]
-        public virtual string Description{ get; }
-
-        public Image Icon { get; protected set; }
-
-        public object Data { get; }
-
-        public AbstractFileViewerConfigInformation(object data)
-        {
-            Data = data;
-        }
-    }
-
-    public class FileViewerConfigInformation : AbstractFileViewerConfigInformation
-    {
-        FileViewerConfig FileViewerConfig;
-        public FileViewerConfigInformation(FileViewerConfig config) : base(config)
-        {
-            FileViewerConfig = config;
-        }
-
-        public override string Name => FileViewerConfig.Name;
-        public override string Description => $"Filters: {FileViewerConfig.Filters.Count}";
     }
 }

@@ -57,7 +57,6 @@
             this.dtlvConfigs.UseCompatibleStateImageBehavior = false;
             this.dtlvConfigs.View = System.Windows.Forms.View.Details;
             this.dtlvConfigs.VirtualMode = true;
-            this.dtlvConfigs.SubItemChecking += new System.EventHandler<BrightIdeasSoftware.SubItemCheckingEventArgs>(this.dtlvConfigs_SubItemChecking);
             this.dtlvConfigs.SelectionChanged += new System.EventHandler(this.dtlvConfigs_SelectionChanged);
             // 
             // splitContainer1

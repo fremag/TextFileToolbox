@@ -74,12 +74,14 @@
     </Compile>
     <Compile Include="FileRepository\FolderRepositoryInformation.cs" />
     <Compile Include="FileViewer\AbstractFileViewerModel .cs" />
+    <Compile Include="FileViewer\Config\AbstractFileViewerConfigInformation.cs" />
     <Compile Include="FileViewer\Config\FileViewerConfigEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="FileViewer\Config\FileViewerConfigEditor.Designer.cs">
       <DependentUpon>FileViewerConfigEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="FileViewer\Config\FileViewerConfigInformation.cs" />
     <Compile Include="FileViewer\DefaultFileViewerModel.cs" />
     <Compile Include="FileViewer\Config\FileViewerConfig.cs" />
     <Compile Include="FileViewer\FileViewerModule.cs">

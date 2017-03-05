@@ -25,8 +25,9 @@ namespace TFT.Tail.Core
         {
             FilePath = filePath;
             Filters = filters;
+            FilterMode = filterMode;
 
-            if(filters == null || ! filters.Any())
+            if (filters == null || ! filters.Any())
             {
                 RawIndex();
             }
@@ -39,7 +40,6 @@ namespace TFT.Tail.Core
         private void FilterIndex()
         {
             reader = new StreamReader(FilePath);
-            indexes.Add(0);
             string s;
             long pos = 0;
             while ( (s = reader.ReadLine()) != null)

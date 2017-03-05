@@ -42,6 +42,7 @@ namespace TFT.Tail.FileViewer
 
         public override void PostInit()
         {
+            dlvFileViewer.Columns.Clear();
             dlvFileViewer.VirtualListDataSource = new DefaultFileViewerModel(dlvFileViewer, FileIndexer);
         }
 
