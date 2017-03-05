@@ -73,6 +73,16 @@ namespace TFT.Tail.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap diskette_small {
+            get {
+                object obj = ResourceManager.GetObject("diskette_small", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap document_inspect {
             get {
                 object obj = ResourceManager.GetObject("document_inspect", resourceCulture);
@@ -176,6 +186,16 @@ namespace TFT.Tail.Properties {
         internal static System.Drawing.Bitmap folder_small {
             get {
                 object obj = ResourceManager.GetObject("folder_small", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap plus_button_small {
+            get {
+                object obj = ResourceManager.GetObject("plus_button_small", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
