@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
-using System.Xml.Serialization;
+using TFT.Tail.Core;
 using WinFwk.UITools.Configuration;
 
 namespace TFT.Tail.FileRepository
 {
-    public class FileRepositoryFolderConfig : IModuleConfig
+    public class FileRepositoryFolderConfig : ModuleConfigAdapter, IIdentifiable
     {
         public enum SortFileByCriteria { Name, CreationDate, ModificationDate, Size}
         public enum SortOrder { Asc, Desc}
@@ -33,14 +33,5 @@ namespace TFT.Tail.FileRepository
         [Category("2. Display")]
         [DefaultValue(0)]
         public int KeepNLast { get; set; } = 0;
-
-        [XmlIgnore]
-        [Browsable(false)]
-        public IConfigurableModule OwnerModule { get; set; }
-
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
     }
 }

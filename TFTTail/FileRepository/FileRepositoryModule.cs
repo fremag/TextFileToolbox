@@ -70,7 +70,6 @@ namespace TFT.Tail.FileRepository
             }
             foreach (var folderConfig in folderConfigs)
             {
-                folderConfig.OwnerModule = this;
                 FolderRepositoryInformation info = new FolderRepositoryInformation(folderConfig);
                 nodes.Add(info);
             }
@@ -251,17 +250,16 @@ namespace TFT.Tail.FileRepository
 
         private void tsbFolderAdd_Click(object sender, System.EventArgs e)
         {
-            FileRepositoryFolderConfig folderConfig = TailSettings.Instance.CreateFileRepositoryFolderConfig();
+            FileRepositoryFolderConfig folderConfig = TailSettings.Instance.Create< FileRepositoryFolderConfig>();
             AddFolder(folderConfig);
         }
 
         private void AddFolder(FileRepositoryFolderConfig folderConfig)
         {
-            folderConfig.OwnerModule = this;
             var folderConfigs = TailSettings.Instance.FileRepositoryFolderConfigs;
             folderConfigs.Add(folderConfig);
             FolderRepositoryInformation info = new FolderRepositoryInformation(folderConfig);
-            UISettingsMgr<TailSettings>.Save(TailSettings.Instance);
+            TailSettings.Instance.Save();
             Init();
             PostInit();
             MessageBus.SendMessage(new OpenModuleConfigurationEditorRequest(this, folderConfig));
@@ -280,7 +278,7 @@ namespace TFT.Tail.FileRepository
                 var folderConfig = folder.Config;
                 folderConfigs.Remove(folderConfig);
             }
-            UISettingsMgr<TailSettings>.Save(TailSettings.Instance);
+            TailSettings.Instance.Save();
             Init();
             PostInit();
         }
@@ -307,7 +305,7 @@ namespace TFT.Tail.FileRepository
                 return;
             }
             TailSettings.Instance.UpdateFileRepositoryFolderConfig(folderConfig);
-            UISettingsMgr<TailSettings>.Save(TailSettings.Instance);
+            TailSettings.Instance.Save();
             Init();
             PostInit();
         }
@@ -355,7 +353,7 @@ namespace TFT.Tail.FileRepository
 
         public void HandleMessage(CreateRepositoryFolderRequest message)
         {
-            FileRepositoryFolderConfig folderConfig = TailSettings.Instance.CreateFileRepositoryFolderConfig();
+            FileRepositoryFolderConfig folderConfig = TailSettings.Instance.Create<FileRepositoryFolderConfig>();
             folderConfig.Name = message.Path;
             folderConfig.Path = message.Path;
             folderConfig.Pattern= message.Pattern;
