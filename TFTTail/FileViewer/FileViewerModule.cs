@@ -1,6 +1,5 @@
-﻿using System.Windows.Forms;
-using BrightIdeasSoftware;
-using TFT.Tail.Core;
+﻿using TFT.Tail.Core;
+using TFT.Tail.FileViewer.Config;
 using WinFwk.UIModules;
 using WinFwk.UITools.Configuration;
 
@@ -10,7 +9,17 @@ namespace TFT.Tail.FileViewer
     {
         private string FilePath { get; set; }
         private FileIndexer FileIndexer { get; set; }
-
+        public FileViewerConfig FileViewerConfig { get; private set; }
+        public IModuleConfig ModuleConfig {
+            get
+            {
+                if (FileViewerConfig == null)
+                {
+                    FileViewerConfig = TailSettings.Instance.Create<FileViewerConfig>();
+                }
+                return FileViewerConfig;
+            }
+        }
         public FileViewerModule()
         {
             InitializeComponent();
@@ -26,62 +35,31 @@ namespace TFT.Tail.FileViewer
         public override void Init()
         {
             base.Init();
-            FileIndexer = new FileIndexer(FilePath);
+            var filters = FileViewerConfig?.Filters;
+            var filterMode = FileViewerConfig?.FilterMode ?? FilterMode.KeepIfMatch;
+            FileIndexer = new FileIndexer(FilePath, filters, filterMode);
         }
 
         public override void PostInit()
         {
-            dlvFileViewer.VirtualListDataSource = new FileContentVirtualSource(dlvFileViewer, FileIndexer);
-        }
-        public IModuleConfig ModuleConfig
-        {
-            get
-            {
-                return null;
-            }
+            dlvFileViewer.VirtualListDataSource = new DefaultFileViewerModel(dlvFileViewer, FileIndexer);
         }
 
         public void Apply(IModuleConfig config)
         {
-            
+            FileViewerConfig = config as FileViewerConfig;
+            if (config != null)
+            {
+                TailSettings.Instance.UpdateFileViewerConfig(FileViewerConfig);
+            }
+            Init();
+            PostInit();
         }
 
         public IModuleConfigEditor CreateEditor()
         {
-            return new DefaultModuleConfigEditor();
-        }
-    }
-
-    public class FileContentVirtualSource : AbstractVirtualListDataSource
-    {
-        private FileIndexer fileIndexer;
-
-        public FileContentVirtualSource(VirtualObjectListView listView, FileIndexer fileIndexer) : base(listView)
-        {
-            this.fileIndexer = fileIndexer;
-
-            var colNumLine = new OLVColumn("#", null);
-            colNumLine.AspectToStringFormat = "{0:###,###,###,##0}";
-            colNumLine.TextAlign = HorizontalAlignment.Right;
-
-            colNumLine.AspectGetter = o => ((object[])o)[0];
-            listView.Columns.Add(colNumLine);
-            var colText = new OLVColumn("text", null);
-            colText.FillsFreeSpace = true;
-            colText.AspectGetter = o => ((object[])o)[1];
-            listView.Columns.Add(colText);
-
-        }
-
-        public override object GetNthObject(int n)
-        {
-            var line = fileIndexer.ReadLine(n);
-            return new object[] { n, line};
-        }
-
-        public override int GetObjectCount()
-        {
-            return fileIndexer.Count;
+            var editor = new FileViewerConfigEditor();
+            return editor;
         }
     }
 }

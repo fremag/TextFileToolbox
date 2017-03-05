@@ -61,6 +61,9 @@
   <ItemGroup>
     <Compile Include="Core\FileIndexer.cs" />
     <Compile Include="Core\FragmentedList.cs" />
+    <Compile Include="Core\IIdentifiable.cs" />
+    <Compile Include="Core\RegexConfig.cs" />
+    <Compile Include="Core\StreamReaderExtensions.cs" />
     <Compile Include="FileRepository\CreateRepositoryFolderRequest.cs" />
     <Compile Include="FileRepository\FileRepositoryFolderConfig.cs" />
     <Compile Include="FileRepository\FileRepositoryCommand.cs" />
@@ -70,6 +73,15 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="FileRepository\FolderRepositoryInformation.cs" />
+    <Compile Include="FileViewer\AbstractFileViewerModel .cs" />
+    <Compile Include="FileViewer\Config\FileViewerConfigEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FileViewer\Config\FileViewerConfigEditor.Designer.cs">
+      <DependentUpon>FileViewerConfigEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileViewer\DefaultFileViewerModel.cs" />
+    <Compile Include="FileViewer\Config\FileViewerConfig.cs" />
     <Compile Include="FileViewer\FileViewerModule.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -91,6 +103,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FileRepository\FileRepositoryModule.resx">
       <DependentUpon>FileRepositoryModule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileViewer\Config\FileViewerConfigEditor.resx">
+      <DependentUpon>FileViewerConfigEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FileViewer\FileViewerModule.resx">
       <DependentUpon>FileViewerModule.cs</DependentUpon>
@@ -162,9 +177,11 @@
     <None Include="Resources\table_layout_subtotals_small.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\diskette_small.png" />
     <Content Include="Resources\document_inspect_small.png" />
     <Content Include="Resources\document_inspect.png" />
     <Content Include="Resources\folder_go.png" />
+    <Content Include="Resources\plus_button_small.png" />
     <Content Include="Resources\table_layout_subtotals.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
