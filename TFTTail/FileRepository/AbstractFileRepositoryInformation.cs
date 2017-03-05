@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using BrightIdeasSoftware;
 using WinFwk.UITools;
@@ -11,7 +8,7 @@ namespace TFT.Tail.FileRepository
 {
     public abstract class AbstractFileRepositoryInformation : TreeNodeInformationAdapter<AbstractFileRepositoryInformation>
     {
-        [OLVColumn(Width = 150, ImageAspectName = nameof(Icon))]
+        [OLVColumn(Width = 250, ImageAspectName = nameof(Icon))]
         public string Name { get; protected set; }
         [IntColumn(Title = "Size (Mo)", Width = 50)]
         public abstract long Size { get; }
