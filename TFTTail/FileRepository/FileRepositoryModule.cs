@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 using TFT.Tail.FileViewer;
 using WinFwk.UICommands;
 using WinFwk.UIMessages;
@@ -250,7 +251,14 @@ namespace TFT.Tail.FileRepository
 
         private void tsbFolderAdd_Click(object sender, System.EventArgs e)
         {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            if( dialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
             FileRepositoryFolderConfig folderConfig = TailSettings.Instance.Create< FileRepositoryFolderConfig>();
+            folderConfig.Path = dialog.SelectedPath;
+            folderConfig.Name = folderConfig.Path;
             AddFolder(folderConfig);
         }
 

@@ -16,6 +16,7 @@ namespace TFT.Tail.FileRepository
         public string Name { get; set; }
 
         [Category("1. Path")]
+        [EditorAttribute(typeof(System.Windows.Forms.Design.FolderNameEditor), typeof(System.Drawing.Design.UITypeEditor))]
         public string Path { get; set; }
         [Category("1. Path")]
         public string Pattern { get; set; } = "*.*";
