@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dlvFileViewer = new WinFwk.UITools.DefaultListView();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dlvFileViewer)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,6 +50,11 @@
             this.dlvFileViewer.View = System.Windows.Forms.View.Details;
             this.dlvFileViewer.VirtualMode = true;
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // FileViewerModule
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -64,5 +70,6 @@
         #endregion
 
         private WinFwk.UITools.DefaultListView dlvFileViewer;
+        private System.Windows.Forms.Timer timer1;
     }
 }

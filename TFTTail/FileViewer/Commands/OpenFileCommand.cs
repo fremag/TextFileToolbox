@@ -2,7 +2,7 @@
 using WinFwk.UICommands;
 using WinFwk.UITools.ToolBar;
 
-namespace TFT.Tail.FileViewer
+namespace TFT.Tail.FileViewer.Commands
 {
     public class OpenFileCommand : AbstractVoidUICommand
     {

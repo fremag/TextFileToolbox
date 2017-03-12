@@ -75,6 +75,9 @@
     </Compile>
     <Compile Include="FileRepository\FolderRepositoryInformation.cs" />
     <Compile Include="FileViewer\AbstractFileViewerModel .cs" />
+    <Compile Include="FileViewer\Commands\StartFileViewerCommand.cs" />
+    <Compile Include="FileViewer\Commands\StopFileViewerCommand.cs" />
+    <Compile Include="FileViewer\Commands\RefreshFileViewerCommand.cs" />
     <Compile Include="FileViewer\Config\AbstractFileViewerConfigInformation.cs" />
     <Compile Include="FileViewer\Config\FileViewerConfigEditor.cs">
       <SubType>UserControl</SubType>
@@ -92,7 +95,7 @@
       <DependentUpon>FileViewerModule.cs</DependentUpon>
     </Compile>
     <Compile Include="FileViewer\DisplayFileCommand.cs" />
-    <Compile Include="FileViewer\OpenFileCommand.cs" />
+    <Compile Include="FileViewer\Commands\OpenFileCommand.cs" />
     <Compile Include="FileViewer\DisplayFilesRequest.cs" />
     <Compile Include="FileViewer\DisplayFileService.cs" />
     <Compile Include="TailSettings.cs" />
@@ -180,12 +183,18 @@
     <None Include="Resources\table_layout_subtotals_small.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\control_play_blue.png" />
+    <Content Include="Resources\control_play_blue_small.png" />
+    <Content Include="Resources\control_stop_blue.png" />
+    <Content Include="Resources\control_stop_blue_small.png" />
     <Content Include="Resources\diskette_small.png" />
     <Content Include="Resources\document_inspect_small.png" />
     <Content Include="Resources\document_inspect.png" />
     <Content Include="Resources\folder_go.png" />
     <Content Include="Resources\plus_button_small.png" />
+    <Content Include="Resources\table_small.png" />
     <Content Include="Resources\table_layout_subtotals.png" />
+    <Content Include="Resources\table_refresh.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

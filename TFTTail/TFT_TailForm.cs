@@ -20,6 +20,7 @@ namespace TFT.Tail
         {
             InitModuleFactory();
             UIServiceHelper.InitServices(msgBus);
+            AddToolBar("Tail", 1, Properties.Resources.table_small);
             InitToolBars();
             InitLog();
 
