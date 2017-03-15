@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="AbstractDummyFileWriterTests.cs" />
     <Compile Include="DummyFileWriter.cs" />
+    <Compile Include="FileIndexerWithFiltersTests.cs" />
     <Compile Include="FileIndexerTests.cs" />
     <Compile Include="DummyFileWriterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
