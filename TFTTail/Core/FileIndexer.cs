@@ -14,6 +14,8 @@ namespace TFT.Tail.Core
         private StreamReader reader;
         private StringBuilder stringBuilder = new StringBuilder(N);
         private char[] charBuffer = new char[N];
+        private long maxPos;
+        private bool hasFilter;
 
         public string FilePath { get; private set; }
         public FilterMode FilterMode { get; private set; }
@@ -30,21 +32,22 @@ namespace TFT.Tail.Core
             var fileReader = File.Open(FilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             reader = new StreamReader(fileReader);
 
-            if (filters == null || ! filters.Any())
+            hasFilter = filters != null && filters.Any();
+            if (hasFilter)
             {
-                indexes.Add(0);
-                RawIndex(0);
+                FilterIndex(0);
             }
             else
             {
-                FilterIndex(0);
+                indexes.Add(0);
+                RawIndex(0);
             }
         }
 
         private void FilterIndex(long startPosition)
         {
             string s;
-            long pos = 0;
+            long pos = startPosition;
             while ( (s = reader.ReadLine()) != null)
             {
                 bool match = Filters.Any(regexConfig => regexConfig.CompiledRegex.IsMatch(s));
@@ -55,31 +58,26 @@ namespace TFT.Tail.Core
                     indexes.Add(pos);
                 }
                 pos = reader.GetPosition();
+                maxPos = Math.Max(pos, maxPos);
             }
         }
 
         public void Refresh()
         {
-            long lastPosition = 0;
-            if (Count != 0) {
+            reader.BaseStream.Position = maxPos;
 
-                lastPosition = indexes[Count - 1];
-                reader.BaseStream.Position = lastPosition;
-            }
-
-            if (Filters == null || !Filters.Any())
+            if (hasFilter)
             {
-                RawIndex(lastPosition);
+                FilterIndex(maxPos);
             }
             else
             {
-                FilterIndex(lastPosition);
+                RawIndex(maxPos);
             }
         }
 
         private void RawIndex(long startPosition)
         {
-            reader.BaseStream.Position = startPosition;
             int nbBlock = 0;
             int read;
             while ((read = reader.Read(charBuffer, 0, N)) > 0)
@@ -90,6 +88,7 @@ namespace TFT.Tail.Core
                     {
                         long pos = nbBlock * N + i + 1 + startPosition;
                         indexes.Add(pos);
+                        maxPos = Math.Max(pos, maxPos);
                     }
                 }
                 nbBlock++;

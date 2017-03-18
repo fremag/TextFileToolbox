@@ -1,9 +1,6 @@
 ﻿using WinFwk.UITools.Configuration;
 using System.Windows.Forms;
 using System.Linq;
-using WinFwk.UITools;
-using System.Drawing;
-using BrightIdeasSoftware;
 using System.Collections.Generic;
 using System;
 
@@ -31,7 +28,7 @@ namespace TFT.Tail.FileViewer.Config
             get
             {
                 var config = dtlvConfigs.CheckedObject as FileViewerConfigInformation;
-                return config.FileViewerConfig;
+                return config?.FileViewerConfig;
             }
         }
 
