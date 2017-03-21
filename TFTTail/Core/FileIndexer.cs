@@ -29,7 +29,7 @@ namespace TFT.Tail.Core
             FilePath = filePath;
             Filters = filters;
             FilterMode = filterMode;
-            var fileReader = File.Open(FilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            var fileReader = File.Open(FilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete);
             reader = new StreamReader(fileReader);
 
             hasFilter = filters != null && filters.Any();
