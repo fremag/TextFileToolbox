@@ -43,6 +43,8 @@
             this.lblDebug = new System.Windows.Forms.Label();
             this.nudDebugPeriod = new System.Windows.Forms.NumericUpDown();
             this.timerDebug = new System.Windows.Forms.Timer(this.components);
+            this.btnStop = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nudPeriod)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudErrorPeriod)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDebugPeriod)).BeginInit();
@@ -173,11 +175,33 @@
             0,
             0});
             // 
+            // btnStop
+            // 
+            this.btnStop.Location = new System.Drawing.Point(337, 35);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(75, 23);
+            this.btnStop.TabIndex = 11;
+            this.btnStop.Text = "Stop";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(329, 129);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnDelete.TabIndex = 12;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(401, 298);
+            this.ClientSize = new System.Drawing.Size(416, 298);
+            this.Controls.Add(this.btnDelete);
+            this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnDebug);
             this.Controls.Add(this.lblDebug);
             this.Controls.Add(this.nudDebugPeriod);
@@ -215,6 +239,8 @@
         private System.Windows.Forms.Label lblDebug;
         private System.Windows.Forms.NumericUpDown nudDebugPeriod;
         private System.Windows.Forms.Timer timerDebug;
+        private System.Windows.Forms.Button btnStop;
+        private System.Windows.Forms.Button btnDelete;
     }
 }
 

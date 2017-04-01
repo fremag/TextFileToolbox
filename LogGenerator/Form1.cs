@@ -13,13 +13,23 @@ namespace LogGenerator
             timerInfo.Tick += LogInfo;
             timerError.Tick += LogError;
             timerDebug.Tick += LogDebug;
+            tbPath.Text = @"E:\tmp\logs\process.log";
         }
         StreamWriter writer;
+        string fileName;
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            var fileName = string.Format(tbPath.Text, DateTime.Now);
-            writer = new StreamWriter(fileName);
+            if (string.IsNullOrEmpty(fileName))
+            {
+                fileName = string.Format(tbPath.Text, DateTime.Now);
+            }
+
+            if (writer == null)
+            {
+                writer = new StreamWriter(fileName);
+            }
+
             timerInfo.Interval = (int)nudPeriod.Value;
             timerInfo.Start();
             timerError.Interval = (int)nudErrorPeriod.Value;
@@ -49,6 +59,10 @@ namespace LogGenerator
 
         private void Log(string msg, string type="INFO")
         {
+            if( writer == null)
+            {
+                return;
+            }
             string line = $"{DateTime.Now:HH:mm:ss.fff} - {type} - {msg}";
             writer.WriteLine(line);
             writer.Flush();
@@ -62,6 +76,27 @@ namespace LogGenerator
         private void btnDebug_Click(object sender, EventArgs e)
         {
             LogDebug(null, EventArgs.Empty);
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            timerDebug.Stop();
+            timerError.Stop();
+            timerInfo.Stop();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if(writer != null)
+            {
+                writer.Close();
+                writer.Dispose();
+                writer = null;
+            }
+            if( ! string.IsNullOrEmpty(fileName))
+            {
+                File.Delete(fileName);
+            }
         }
     }
 }
